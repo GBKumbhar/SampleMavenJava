@@ -3,23 +3,87 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.conti.test</groupId>
-	<artifactId>HelloProject</artifactId>
+	<artifactId>helloproject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
-	<distributionManagement>
-		<repository>
-			<id>github</id>
-			<name>GitHub GBKumbhar Apache Maven Packages</name>
-			<url>https://maven.pkg.github.com/GBKumbhar/SampleMavenJava</url>
-		</repository>
-	</distributionManagement>
-	<build>
 
+	<profiles>
+		<profile>
+			<id>github-packages</id>
+			<activation>
+				<property>
+					<name>useTestRepo</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<properties>
+			</properties>
+			<distributionManagement>
+				<repository>
+					<id>github</id>
+					<name>GitHub GBKumbhar Apache Maven Packages</name>
+					<url>https://maven.pkg.github.com/GBKumbhar/SampleMavenJava</url>
+				</repository>
+
+			</distributionManagement>
+		</profile>
+
+		<profile>
+			<id>nexux-repository</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.5.1</version>
+						<executions>
+							<execution>
+								<id>default-deploy</id>
+								<phase>deploy</phase>
+								<goals>
+									<goal>deploy</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<serverId>nexus</serverId>
+							<nexusUrl>http://localhost:8085/</nexusUrl>
+							<skipStaging>true</skipStaging>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+			<distributionManagement>
+				<repository>
+					<id>nexus</id>
+					<url>http://admin:admin@localhost:8085/repository/maven-releases/</url>
+				</repository>
+				<snapshotRepository>
+					<id>nexus</id>
+					<url>http://admin:admin@localhost:8085/repository/maven-snapshots/</url>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
+	</profiles>
+	<build>
 		<plugins>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.1</version>
+				<executions>
+					<execution>
+						<id>default-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 			<plugin>
 				<!-- Build an executable JAR -->
