@@ -37,9 +37,10 @@ jobs:
     - name: print vars
       run: |
         env
-        echo ${{ github.token }}
+        echo ${{ secrets.TOKEN_FOR_ARTIFACTORIES }}
+        echo $GITHUB_WORKSPACE
 
     - name: Publish to GitHub Packages Apache Maven
       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
       env:
-        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN_FOR_ARTIFACTORIES }}
