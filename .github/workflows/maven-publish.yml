@@ -39,6 +39,7 @@ jobs:
         env
         echo ${{ secrets.TOKEN_FOR_ARTIFACTORIES }}
         echo $GITHUB_WORKSPACE
+        cat $GITHUB_WORKSPACE/settings.xml
 
     - name: Publish to GitHub Packages Apache Maven
       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
