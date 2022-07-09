@@ -45,5 +45,3 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN_FOR_ARTIFACTORIES }}
         
-    - name: Publish to Nexus repository
-      run: mvn clean -Pnexux-repository deploy
