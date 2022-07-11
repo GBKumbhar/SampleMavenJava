@@ -16,9 +16,10 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: |
+        def tag  = sh script: 'git rev-parse HEAD', returnStdout: true
         docker-compose up
         docker images
-        docker tag my-docker-repo 00010009/sampla-java1
+        docker tag my-docker-repo 00010009/sampla-java1:tag
         docker login -u ${{ secrets.DOCKERHUB_ID }} -p ${{ secrets.DOCKERHUB_PASS }} 
-        docker push 00010009/sampla-java1:latest
+        docker push 00010009/sampla-java1:tag
         
