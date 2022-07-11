@@ -2,6 +2,7 @@ version: "3.3"
 services: 
   myapp: 
     build: .
+    image: my-docker-repo
 
   hello-world:
     image: "hello-world"
